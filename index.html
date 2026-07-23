@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caminho da Fé de Bike — Credencial de Viagem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#1c2e24;
+    --pine-2:#26402f;
+    --parchment:#f1e7cf;
+    --parchment-2:#e6d8b8;
+    --ochre:#c99a2e;
+    --ochre-light:#e3bb56;
+    --stamp-red:#a63d2f;
+    --ink:#2a2118;
+    --muted:#6b6250;
+    --line: rgba(241,231,207,0.16);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--pine);
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(201,154,46,0.08), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(166,61,47,0.06), transparent 45%);
+    color:var(--parchment);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    padding-bottom:80px;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; margin:0; }
+  .mono{ font-family:'Space Mono', monospace; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:920px;
+    margin:0 auto;
+    padding:48px 24px 32px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--ochre-light);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:clamp(32px, 6vw, 54px);
+    font-weight:700;
+    color:var(--parchment);
+    letter-spacing:-0.01em;
+  }
+  .hero p.sub{
+    margin-top:12px;
+    color:var(--parchment-2);
+    font-size:16px;
+    max-width:520px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .stats{
+    display:flex;
+    justify-content:center;
+    gap:36px;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+  .stat b{ display:block; font-family:'Fraunces', serif; font-size:28px; color:var(--ochre-light); }
+  .stat span{ font-size:12px; color:var(--parchment-2); text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* ---------- DATE TOGGLE ---------- */
+  .toggle-wrap{
+    max-width:920px;
+    margin:28px auto 0;
+    padding:0 24px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .toggle-btn{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    background:transparent;
+    border:1px solid var(--ochre);
+    color:var(--parchment);
+    padding:10px 18px;
+    border-radius:100px;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .toggle-btn.active{
+    background:var(--ochre);
+    color:var(--ink);
+    font-weight:700;
+  }
+
+  /* ---------- TOTAL BAR (sticky) ---------- */
+  .total-bar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(28,46,36,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--ochre);
+    padding:12px 24px;
+    display:flex;
+    justify-content:center;
+    align-items:baseline;
+    gap:10px;
+    font-family:'Space Mono', monospace;
+  }
+  .total-bar .label{ font-size:12px; color:var(--parchment-2); text-transform:uppercase; letter-spacing:.1em;}
+  .total-bar .value{ font-size:22px; color:var(--ochre-light); font-weight:700; }
+  .total-bar .hint{ font-size:11px; color:var(--parchment-2); opacity:.75; }
+
+  /* ---------- ROUTE TIMELINE ---------- */
+  .timeline{
+    max-width:920px;
+    margin:40px auto;
+    padding:0 24px;
+    position:relative;
+  }
+  .trail-line{
+    position:absolute;
+    left:35px;
+    top:24px;
+    bottom:24px;
+    width:2px;
+    background-image: linear-gradient(var(--ochre) 60%, transparent 0%);
+    background-size: 2px 14px;
+    background-repeat:repeat-y;
+  }
+  @media (max-width:640px){ .trail-line{ left:22px; } }
+
+  .stop{
+    position:relative;
+    margin-bottom:18px;
+    padding-left:80px;
+  }
+  @media (max-width:640px){ .stop{ padding-left:52px; } }
+
+  .stop-marker{
+    position:absolute;
+    left:14px;
+    top:14px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:var(--pine-2);
+    border:2px solid var(--ochre);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    color:var(--ochre-light);
+    font-size:16px;
+    z-index:2;
+  }
+  @media (max-width:640px){ .stop-marker{ left:2px; width:34px; height:34px; font-size:13px; } }
+
+  .card{
+    background:var(--parchment);
+    color:var(--ink);
+    border-radius:14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    overflow:hidden;
+    border:1px solid var(--parchment-2);
+  }
+  .card-head{
+    padding:18px 22px;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    background:linear-gradient(180deg, #fbf5e6, var(--parchment));
+  }
+  .card-head:hover{ background:linear-gradient(180deg, #fdf9ef, var(--parchment)); }
+  .card-title h3{ font-size:21px; color:var(--ink); }
+  .card-meta{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .stamp{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    border:2px solid var(--stamp-red);
+    color:var(--stamp-red);
+    border-radius:8px;
+    padding:5px 10px;
+    transform:rotate(-4deg);
+    white-space:nowrap;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  .chevron{
+    font-size:18px;
+    color:var(--muted);
+    transition:transform .25s ease;
+    flex-shrink:0;
+  }
+  .stop.open .chevron{ transform:rotate(180deg); }
+
+  .card-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+    border-top:1px solid var(--parchment-2);
+  }
+  .stop.open .card-body{ max-height:3000px; }
+
+  .section{
+    padding:20px 22px;
+    border-bottom:1px dashed var(--parchment-2);
+  }
+  .section:last-child{ border-bottom:none; }
+  .section-title{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--muted);
+    margin-bottom:12px;
+    font-family:'Space Mono', monospace;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .option{
+    display:grid;
+    grid-template-columns:20px 1fr auto auto;
+    gap:12px;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid rgba(0,0,0,0.06);
+  }
+  .option:last-child{ border-bottom:none; }
+  .option input[type=radio]{ accent-color:var(--stamp-red); width:16px; height:16px; }
+  .opt-info b{ font-size:14px; display:block; }
+  .opt-info span{ font-size:12.5px; color:var(--muted); }
+  .opt-avg{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    text-align:right;
+    white-space:nowrap;
+  }
+  .opt-input{
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+  .opt-input span{ font-family:'Space Mono', monospace; font-size:12px; color:var(--muted); }
+  .opt-input input[type=number]{
+    width:78px;
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    padding:6px 8px;
+    border-radius:6px;
+    border:1px solid var(--parchment-2);
+    background:#fff;
+    color:var(--ink);
+  }
+  .opt-input input[type=number]:focus{ outline:2px solid var(--ochre); border-color:var(--ochre); }
+
+  .subtotal{
+    margin-top:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink);
+    text-align:right;
+  }
+  .subtotal b{ color:var(--stamp-red); }
+
+  footer{
+    max-width:920px;
+    margin:40px auto 0;
+    padding:20px 24px;
+    text-align:center;
+    color:var(--parchment-2);
+    font-size:12.5px;
+  }
+  footer a{ color:var(--ochre-light); }
+
+  .note{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px 4px;
+  }
+  .note-box{
+    background:rgba(201,154,46,0.1);
+    border:1px solid var(--ochre);
+    border-radius:10px;
+    padding:14px 18px;
+    font-size:13px;
+    color:var(--parchment);
+    margin-top:10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">Credencial do Peregrino Ciclista</div>
+  <h1>Caminho da Fé de Bike</h1>
+  <p class="sub">Águas da Prata → Inconfidentes → Estiva → Luminosa → Campos do Jordão → Aparecida</p>
+  <div class="stats">
+    <div class="stat"><b>318</b><span>Quilômetros</span></div>
+    <div class="stat"><b>5</b><span>Dias de pedal</span></div>
+    <div class="stat"><b>6</b><span>Pernoites</span></div>
+  </div>
+</div>
+
+<div class="toggle-wrap">
+  <button class="toggle-btn active" data-start="2026-11-14" id="btn-nov">Saída de Unaí 14/11/2026</button>
+  <button class="toggle-btn" data-start="2026-12-12" id="btn-dez">Saída de Unaí 12/12/2026</button>
+</div>
+
+<div class="note">
+  <div class="note-box">⚠️ Preços de hospedagem e restaurante abaixo são <strong>médias de mercado</strong> pesquisadas — variam por temporada e disponibilidade. Marque a opção escolhida em cada categoria e ajuste o valor no campo ao lado: o total da viagem no topo é calculado automaticamente.</div>
+</div>
+
+<div class="timeline" style="margin-bottom:0;">
+  <div class="stop open" id="fuel-stop" style="padding-left:0;">
+    <div class="card">
+      <div class="card-head" onclick="toggleFuel()">
+        <div class="card-title">
+          <h3>🚗 Combustível — Carro de Apoio</h3>
+          <div class="card-meta">Fiat Toro 2025 · Unaí → Águas da Prata → Aparecida → Unaí</div>
+        </div>
+        <div class="stamp">2.206 km</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="section">
+          <div class="section-title">🛣️ Trechos (edite o km se precisar ajustar)</div>
+          <div class="option" style="grid-template-columns:1fr auto;">
+            <label class="opt-info"><b>Ida — Unaí → Águas da Prata</b><span>Levando ciclistas + bikes (estimado via Uberlândia)</span></label>
+            <div class="opt-input"><input type="number" id="leg-1" value="868" step="1" min="0"><span>km</span></div>
+          </div>
+          <div class="option" style="grid-template-columns:1fr auto;">
+            <label class="opt-info"><b>Apoio — Águas da Prata → Aparecida</b><span>Seguindo o roteiro, parando em Inconfidentes, Estiva, Luminosa e Campos do Jordão</span></label>
+            <div class="opt-input"><input type="number" id="leg-2" value="318" step="1" min="0"><span>km</span></div>
+          </div>
+          <div class="option" style="grid-template-columns:1fr auto;">
+            <label class="opt-info"><b>Volta — Aparecida → Unaí</b><span>Rota direta, evitando SP (estimado via Campinas/Uberlândia)</span></label>
+            <div class="opt-input"><input type="number" id="leg-3" value="1020" step="1" min="0"><span>km</span></div>
+          </div>
+          <div class="subtotal">Distância total: <b class="mono" id="fuel-total-km">2.206 km</b></div>
+        </div>
+        <div class="section">
+          <div class="section-title">⛽ Comparativo Etanol × Gasolina</div>
+          <div class="option" style="grid-template-columns:20px 1fr auto auto;">
+            <input type="radio" name="fuel-choice" id="fuel-etanol" checked>
+            <label class="opt-info" for="fuel-etanol"><b>Etanol</b><span>Consumo médio informado</span></label>
+            <div class="opt-avg">consumo<br><input type="number" id="cons-etanol" value="9" step="0.1" min="0.1" style="width:56px;font-family:'Space Mono',monospace;font-size:12px;padding:4px 6px;border-radius:6px;border:1px solid var(--parchment-2);"> km/L</div>
+            <div class="opt-input"><span>R$</span><input type="number" id="price-etanol" value="4.29" step="0.01" min="0"><span>/L</span></div>
+          </div>
+          <div class="option" style="grid-template-columns:20px 1fr auto auto;">
+            <input type="radio" name="fuel-choice" id="fuel-gasolina">
+            <label class="opt-info" for="fuel-gasolina"><b>Gasolina</b><span>Consumo médio informado</span></label>
+            <div class="opt-avg">consumo<br><input type="number" id="cons-gasolina" value="11" step="0.1" min="0.1" style="width:56px;font-family:'Space Mono',monospace;font-size:12px;padding:4px 6px;border-radius:6px;border:1px solid var(--parchment-2);"> km/L</div>
+            <div class="opt-input"><span>R$</span><input type="number" id="price-gasolina" value="6.58" step="0.01" min="0"><span>/L</span></div>
+          </div>
+          <div class="subtotal" id="fuel-compare-note" style="text-align:left; margin-top:10px;"></div>
+          <div class="subtotal">Combustível selecionado: <b class="mono" id="sub-fuel">R$ 0</b> <span style="color:var(--muted);">(<span id="fuel-liters">0</span> litros)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="total-bar">
+  <span class="label">Total estimado da viagem</span>
+  <span class="value mono" id="grand-total">R$ 0</span>
+  <span class="hint">(hospedagem + restaurante + combustível)</span>
+</div>
+
+<div class="timeline">
+  <div class="trail-line"></div>
+  <!-- STOPS injected by JS -->
+  <div id="stops-container"></div>
+</div>
+
+<div class="note">
+  <div class="card" style="padding:26px; text-align:center; margin-top:10px;">
+    <div class="section-title" style="justify-content:center; margin-bottom:6px;">💰 Custo médio total da viagem</div>
+    <div style="font-family:'Fraunces',serif; font-weight:700; font-size:40px; color:var(--stamp-red);" id="final-total">R$ 0</div>
+    <div class="card-meta" style="margin-top:8px;">Hospedagem + Restaurante (todos os pernoites) + Combustível do carro de apoio</div>
+  </div>
+</div>
+
+<footer>
+  Roteiro de referência — confirme sempre a lista oficial de pousadas credenciadas em
+  <a href="https://caminhodafe.com.br/ptbr/pousadas/" target="_blank">caminhodafe.com.br</a>
+  antes de viajar. Boa jornada! 🚴‍♂️🙏
+</footer>
+
+<script>
+const DATA = [
+  {
+    day: 0, dateOffset: 0, city: "Águas da Prata", sub: "Saída de Unaí → chegada em Águas da Prata (carro)", km: null, weekdayLabel:"véspera",
+    hotels: [
+      {name:"Hotel Pousada do Casarão", desc:"Chalés c/ piscina, churrasqueira e estacionamento — Centro", avg:300},
+      {name:"Grande Hotel Prata", desc:"Hotel tradicional da cidade, Centro", avg:300},
+      {name:"Camping e Pousada Paiol", desc:"Simples, econômica, aceita pet", avg:300},
+    ],
+    restaurants: [
+      {name:"Restaurante Aquarius", desc:"Buffet a quilo, +35 anos de tradição", avg:120, unit:"kg"},
+      {name:"Cantina Di Roma", desc:"Italiana / pizza, ambiente agradável", avg:120, unit:"pessoa"},
+      {name:"Espaço Caminho da Serra", desc:"Opção variada no centro", avg:120, unit:"pessoa"},
+    ]
+  },
+  {
+    day: 1, dateOffset: 1, city: "Inconfidentes", sub: "Águas da Prata → Inconfidentes", km:"~70 km",
+    hotels: [
+      {name:"Hotel Bororó", desc:"Centro, restaurante/bar próprio", avg:300},
+      {name:"Pousada Águas Livres", desc:"Bairro Romas, reserva fácil por WhatsApp", avg:300},
+      {name:"Pousada Bela Vista", desc:"Centro, fácil acesso de carro", avg:300},
+    ],
+    restaurants: [
+      {name:"Bar/Restaurante do Bororó", desc:"Pão de queijo, esfirra, lanches fartos", avg:120, unit:"pessoa"},
+      {name:"Comida caseira mineira (self-service)", desc:"Estimativa regional a quilo", avg:120, unit:"kg"},
+      {name:"Padaria/Lanchonete central", desc:"Opção rápida e econômica", avg:120, unit:"pessoa"},
+    ]
+  },
+  {
+    day: 2, dateOffset: 2, city: "Estiva", sub: "Inconfidentes → Estiva", km:"~55 km",
+    hotels: [
+      {name:"Pousada Poka", desc:"Centro de Estiva, credenciada no Caminho da Fé", avg:300},
+      {name:"Pousada Serra Azul", desc:"Vista panorâmica da Mantiqueira, restaurante próprio", avg:300},
+      {name:"Pouso/camping de apoio local", desc:"Opção mais simples e econômica", avg:300},
+    ],
+    restaurants: [
+      {name:"Restaurante da Pousada Serra Azul", desc:"Pratos caseiros regionais, vista da serra", avg:120, unit:"pessoa"},
+      {name:"Milk Shake Mix (lanchonete local)", desc:"Lanches rápidos", avg:120, unit:"pessoa"},
+      {name:"Comida mineira self-service", desc:"Estimativa regional a quilo", avg:120, unit:"kg"},
+    ]
+  },
+  {
+    day: 3, dateOffset: 3, city: "Luminosa", sub: "Estiva → Luminosa (distrito de Brazópolis)", km:"~65 km",
+    hotels: [
+      {name:"Casa Gonçalina", desc:"Suítes, restaurante, bicicletário e higienização de bike", avg:300},
+      {name:"Pousada Mirante da Luminosa", desc:"Vista panorâmica da Serra da Luminosa", avg:300},
+      {name:"Pousada da Lua", desc:"Clima familiar, estilo hostel, bem econômica", avg:300},
+    ],
+    restaurants: [
+      {name:"Restaurante da Casa Gonçalina", desc:"Churrasqueira e fogão a lenha — almoço peregrino R$40 / turista R$60", avg:120, unit:"pessoa"},
+      {name:"Bar Quilombo / Restaurante Oásis", desc:"Omeletes e lanches no meio da trilha", avg:120, unit:"pessoa"},
+      {name:"Pousada Mirante (janta + café incluso)", desc:"Pacote de pouso com refeição", avg:120, unit:"pessoa"},
+    ]
+  },
+  {
+    day: 4, dateOffset: 4, city: "Campos do Jordão", sub: "Luminosa → Campos do Jordão", km:"~65 km",
+    hotels: [
+      {name:"Hotel Savoy", desc:"Chalés, piscina aquecida, playground, monitoria infantil", avg:300},
+      {name:"Hotel JB", desc:"Tradicional, no coração da Vila Capivari", avg:300},
+      {name:"Golden Park Campos", desc:"Mais tranquilo, aceita pet, entrada da cidade", avg:300},
+    ],
+    restaurants: [
+      {name:"O Boteco de Minas", desc:"Ótimo custo-benefício, medalhões e petiscos", avg:120, unit:"pessoa"},
+      {name:"Choperia Baden Baden", desc:"Ícone da cidade, linguiças alemãs e chope artesanal", avg:120, unit:"pessoa"},
+      {name:"Davos / La Coupole", desc:"Fondue tradicional, mais chique", avg:120, unit:"pessoa"},
+    ]
+  },
+  {
+    day: 5, dateOffset: 5, city: "Aparecida", sub: "Campos do Jordão → Aparecida (chegada)", km:"~63 km",
+    hotels: [
+      {name:"Hotel Peregrinos", desc:"A 200m do Centro de Apoio ao Romeiro, dá pra ir a pé à Basílica", avg:300},
+      {name:"Britto Hotel", desc:"Em frente ao estacionamento do Santuário", avg:300},
+      {name:"São Bento Palace Hotel", desc:"Bom custo-benefício, ~5 min da entrada", avg:300},
+    ],
+    restaurants: [
+      {name:"Augusto Restaurante", desc:"Buffet livre no Centro de Apoio ao Romeiro", avg:120, unit:"pessoa"},
+      {name:"Restaurante Santuário", desc:"Perto da Basílica, comida fresca", avg:120, unit:"kg"},
+      {name:"La Picanha", desc:"Rodízio de carnes nobres", avg:120, unit:"pessoa"},
+    ]
+  },
+];
+
+const startBtns = document.querySelectorAll('.toggle-btn');
+let currentStart = new Date("2026-11-14T12:00:00");
+
+const weekdayNames = ["domingo","segunda","terça","quarta","quinta","sexta","sábado"];
+
+function formatDate(base, offset){
+  const d = new Date(base);
+  d.setDate(d.getDate() + offset);
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  return { text: `${dd}/${mm}`, weekday: weekdayNames[d.getDay()] };
+}
+
+function currency(v){
+  return 'R$ ' + Number(v).toLocaleString('pt-BR', {minimumFractionDigits: v % 1 !== 0 ? 2 : 0, maximumFractionDigits:2});
+}
+
+function render(){
+  const container = document.getElementById('stops-container');
+  container.innerHTML = '';
+
+  DATA.forEach((stop, idx) => {
+    const dateInfo = formatDate(currentStart, stop.dateOffset);
+    const stopEl = document.createElement('div');
+    stopEl.className = 'stop' + (idx === 0 ? ' open' : '');
+    stopEl.dataset.index = idx;
+
+    const hotelOptions = stop.hotels.map((h,i) => optionRow('hotel', idx, i, h)).join('');
+    const restOptions = stop.restaurants.map((r,i) => optionRow('rest', idx, i, r)).join('');
+
+    stopEl.innerHTML = `
+      <div class="stop-marker">${stop.day}</div>
+      <div class="card">
+        <div class="card-head" onclick="toggleStop(${idx})">
+          <div class="card-title">
+            <h3>${stop.city}</h3>
+            <div class="card-meta">${stop.sub}${stop.km ? ' · ' + stop.km : ''}</div>
+          </div>
+          <div class="stamp">${dateInfo.text} · ${dateInfo.weekday}</div>
+          <div class="chevron">▾</div>
+        </div>
+        <div class="card-body">
+          <div class="section">
+            <div class="section-title">🏨 Hospedagem</div>
+            ${hotelOptions}
+            <div class="subtotal">Selecionado: <b class="mono" id="sub-hotel-${idx}">R$ 0</b></div>
+          </div>
+          <div class="section">
+            <div class="section-title">🍽️ Restaurante</div>
+            ${restOptions}
+            <div class="subtotal">Selecionado: <b class="mono" id="sub-rest-${idx}">R$ 0</b></div>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(stopEl);
+  });
+
+  // set default checked = first option of each group, then wire events
+  DATA.forEach((stop, idx) => {
+    document.querySelector(`input[name="hotel-${idx}"][data-i="0"]`).checked = true;
+    document.querySelector(`input[name="rest-${idx}"][data-i="0"]`).checked = true;
+  });
+
+  document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', recalc));
+  document.querySelectorAll('input[type=number]').forEach(r => r.addEventListener('input', recalc));
+  ['leg-1','leg-2','leg-3','cons-etanol','cons-gasolina','price-etanol','price-gasolina'].forEach(id => {
+    document.getElementById(id).addEventListener('input', recalc);
+  });
+  document.getElementById('fuel-etanol').addEventListener('change', recalc);
+  document.getElementById('fuel-gasolina').addEventListener('change', recalc);
+
+  recalc();
+}
+
+function optionRow(type, stopIdx, i, item){
+  const unit = item.unit ? `/${item.unit}` : '/diária';
+  return `
+    <div class="option">
+      <input type="radio" name="${type}-${stopIdx}" data-i="${i}" data-avg="${item.avg}" id="${type}-${stopIdx}-${i}">
+      <label class="opt-info" for="${type}-${stopIdx}-${i}">
+        <b>${item.name}</b>
+        <span>${item.desc}</span>
+      </label>
+      <div class="opt-avg">média<br>${currency(item.avg)}${unit}</div>
+      <div class="opt-input">
+        <span>R$</span>
+        <input type="number" step="1" min="0" value="${item.avg}" data-group="${type}-${stopIdx}" data-i="${i}">
+      </div>
+    </div>
+  `;
+}
+
+function toggleStop(idx){
+  document.querySelector(`.stop[data-index="${idx}"]`).classList.toggle('open');
+}
+
+function toggleFuel(){
+  document.getElementById('fuel-stop').classList.toggle('open');
+}
+
+function recalcFuel(){
+  const leg1 = parseFloat(document.getElementById('leg-1').value) || 0;
+  const leg2 = parseFloat(document.getElementById('leg-2').value) || 0;
+  const leg3 = parseFloat(document.getElementById('leg-3').value) || 0;
+  const totalKm = leg1 + leg2 + leg3;
+  document.getElementById('fuel-total-km').textContent = totalKm.toLocaleString('pt-BR') + ' km';
+  document.querySelector('#fuel-stop .stamp').textContent = totalKm.toLocaleString('pt-BR') + ' km';
+
+  const consEtanol = parseFloat(document.getElementById('cons-etanol').value) || 1;
+  const consGasolina = parseFloat(document.getElementById('cons-gasolina').value) || 1;
+  const priceEtanol = parseFloat(document.getElementById('price-etanol').value) || 0;
+  const priceGasolina = parseFloat(document.getElementById('price-gasolina').value) || 0;
+
+  const litersEtanol = totalKm / consEtanol;
+  const litersGasolina = totalKm / consGasolina;
+  const costEtanol = litersEtanol * priceEtanol;
+  const costGasolina = litersGasolina * priceGasolina;
+
+  const ratio = priceEtanol / priceGasolina;
+  const compareNote = ratio <= 0.7
+    ? `✅ Etanol compensa: custa ${(ratio*100).toFixed(1)}% do preço da gasolina (regra prática: vale a pena até 70%).`
+    : `⚠️ Gasolina compensa mais: etanol está em ${(ratio*100).toFixed(1)}% do preço da gasolina (acima dos 70% de referência).`;
+  document.getElementById('fuel-compare-note').innerHTML = compareNote +
+    `<br><span class="mono" style="font-size:12px;">Etanol: ${litersEtanol.toFixed(0)} L × R$${priceEtanol.toFixed(2)} = ${currency(costEtanol)} · Gasolina: ${litersGasolina.toFixed(0)} L × R$${priceGasolina.toFixed(2)} = ${currency(costGasolina)}</span>`;
+
+  const useEtanol = document.getElementById('fuel-etanol').checked;
+  const selectedCost = useEtanol ? costEtanol : costGasolina;
+  const selectedLiters = useEtanol ? litersEtanol : litersGasolina;
+  document.getElementById('sub-fuel').textContent = currency(selectedCost);
+  document.getElementById('fuel-liters').textContent = selectedLiters.toFixed(0);
+
+  return selectedCost;
+}
+
+function recalc(){
+  let grand = 0;
+  DATA.forEach((stop, idx) => {
+    ['hotel','rest'].forEach(type => {
+      const checked = document.querySelector(`input[name="${type}-${idx}"]:checked`);
+      let val = 0;
+      if(checked){
+        const i = checked.dataset.i;
+        const input = document.querySelector(`input[type=number][data-group="${type}-${idx}"][data-i="${i}"]`);
+        val = parseFloat(input.value) || 0;
+      }
+      document.getElementById(`sub-${type}-${idx}`).textContent = currency(val);
+      grand += val;
+    });
+  });
+  grand += recalcFuel();
+  document.getElementById('grand-total').textContent = currency(grand);
+  const finalTotalEl = document.getElementById('final-total');
+  if(finalTotalEl) finalTotalEl.textContent = currency(grand);
+}
+
+startBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    startBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentStart = new Date(btn.dataset.start + "T12:00:00");
+    render();
+  });
+});
+
+render();
+</script>
+
+</body>
+</html>
