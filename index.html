@@ -248,6 +248,13 @@
   .option input[type=radio]{ accent-color:var(--stamp-red); width:16px; height:16px; }
   .opt-info b{ font-size:14px; display:block; }
   .opt-info span{ font-size:12.5px; color:var(--muted); }
+  .opt-stars{ margin-top:4px; font-size:13px; color:var(--ochre); letter-spacing:1px; }
+  .opt-stars-none{ color:var(--parchment-2); filter:grayscale(1); opacity:.6; letter-spacing:1px; }
+  .opt-stars-num{ font-family:'Space Mono', monospace; color:var(--ink); letter-spacing:0; margin-left:4px; font-size:12px; }
+  .opt-stars-src{ font-family:'Inter',sans-serif; color:var(--muted); letter-spacing:0; font-size:11px; }
+  .opt-link{ color:var(--stamp-red); text-decoration:none; border-bottom:1px dashed var(--stamp-red); }
+  .opt-link:hover{ color:var(--ochre); border-bottom-color:var(--ochre); }
+  .opt-link-icon{ font-size:11px; }
   .opt-avg{
     font-family:'Space Mono', monospace;
     font-size:12px;
@@ -327,7 +334,7 @@
 </div>
 
 <div class="note">
-  <div class="note-box">⚠️ Preços de hospedagem e restaurante abaixo são <strong>médias de mercado</strong> pesquisadas — variam por temporada e disponibilidade. Marque a opção escolhida em cada categoria e ajuste o valor no campo ao lado: o total da viagem no topo é calculado automaticamente.</div>
+  <div class="note-box">⚠️ Hospedagens atualizadas conforme a <strong>Planilha Ramal Águas da Prata — Edição 18.8</strong> (atualizada em 31/07/2026) da Associação dos Amigos do Caminho da Fé. Os valores de "média" são o ponto médio da faixa de diária informada pela planilha (diária por pessoa); restaurantes seguem estimativas de mercado. Marque a opção escolhida em cada categoria e ajuste o valor no campo ao lado: o total da viagem no topo é calculado automaticamente.<br><br>⭐ <strong>Sobre as estrelas:</strong> pesquisamos as 101 pousadas uma a uma no Google, Tripadvisor, Booking e KAYAK. Apenas 14 têm avaliação pública agregada confiável (exibida com nota e fonte ao passar o mouse) — a grande maioria é hospedagem familiar pequena, atendida só por telefone/WhatsApp, sem presença digital suficiente para uma nota honesta. Essas aparecem com estrelas vazias e "sem avaliação pública".</div>
 </div>
 
 <div class="timeline" style="margin-bottom:0;">
@@ -411,9 +418,25 @@ const DATA = [
   {
     day: 0, dateOffset: 0, city: "Águas da Prata", sub: "Saída de Unaí → chegada em Águas da Prata (carro)", km: null, weekdayLabel:"véspera",
     hotels: [
-      {name:"Hotel Pousada do Casarão", desc:"Chalés c/ piscina, churrasqueira e estacionamento — Centro", avg:300},
-      {name:"Grande Hotel Prata", desc:"Hotel tradicional da cidade, Centro", avg:300},
-      {name:"Camping e Pousada Paiol", desc:"Simples, econômica, aceita pet", avg:300},
+      {name:"Camping e Pousada do Paiol", desc:"3,4 km do início da trilha — APTO SGL/DBL/TPL, WC CL, opção mais econômica", avg:83, rating:3.8, ratingSrc:"Tripadvisor · 60 avaliações", url:"https://www.booking.com/hotel/br/camping-e-pousada-paiol.html"},
+      {name:"Casa do Lago (c/ piscina)", desc:"2,6 km do início da trilha — QT DBL/TPL/Beliche", avg:125, rating:4.4, ratingSrc:"Booking (8,7/10) · poucas avaliações", url:"https://www.booking.com/hotel/br/casa-do-lago-aguas-da-prata.html"},
+      {name:"Spasso Grécia Pousada", desc:"2 km do início da trilha — QT SGL/DBL/TPL, WC CL", avg:128, rating:4.5, ratingSrc:"5,0/5 · 10 avaliações (perfil de casamentos/eventos)", url:"https://www.facebook.com/spassogrecia/"},
+      {name:"Pousada e Hostel Casa do Fábio", desc:"1,1 km do início da trilha — DBL/TPL/BL", avg:65, rating:4.4, ratingSrc:"Booking (8,7-8,8/10) · 180 avaliações", url:"https://www.booking.com/hotel/br/suites-de-casal-piscina-churrasqueira-e-area-de-fogueira.html"},
+      {name:"Pousada Espaço Naturaleza", desc:"2.000m do início da trilha — APTO SGL/Beliche/TV/VT/FB", avg:90, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Xarminho da Vilma", desc:"900m do início da trilha — quarto simples", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Santa Júlia II", desc:"750m do início da trilha — QT-SGL/DBL/Beliche/WC CL/TV/VT", avg:110, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Espaço Cosmos", desc:"750m do início da trilha — SLG/DBL/TPL/Beliche/WC CL, credenciada", avg:130, rating:4.9, ratingSrc:"Booking (9,3/10, 40 av.) + Tripadvisor 5/5", url:"https://www.booking.com/hotel/br/espaco-cosmos-chacara-recanto-das-pedras.pt-br.html"},
+      {name:"Hostel Jardim das Rosas", desc:"550m do início da trilha — QT-DBL/TPL/TV/Beliche/WC CL", avg:100, rating:null, ratingSrc:"Listada no Tripadvisor, sem nota agregada"},
+      {name:"Hostel Casa Verde", desc:"550m do início da trilha — DBL/WC CL", avg:78, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"N. Sª de Lourdes Pousada", desc:"450m do início da trilha — QT-SGL/DBL/WC CL, check-in 15h", avg:113, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Casa do Fundador", desc:"450m do início da trilha — QTO-SLG/DBL/Beliche/WC CL, credenciada", avg:143, rating:null, ratingSrc:"Listada no Tripadvisor, sem nota agregada"},
+      {name:"Pousada Mancini", desc:"400m do início da trilha — TPL/DBL/VT, credenciada", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Hospedagem Recanto da Matriz", desc:"280m do início da trilha — QTO-TPL/Beliche/WC CL/TV/AC/FB", avg:120, rating:null, ratingSrc:"1 avaliação (10/10) — amostra insuficiente"},
+      {name:"Pousada Moreira Lima", desc:"130m do início da trilha — Flat DBL/TPL/TV/VT/FB/AC, café incluso", avg:130, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada do Peregrino", desc:"100m do início da trilha — APTO SGL/DBL/TV na sala, café incluso, credenciada", avg:130, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Grande Hotel Águas da Prata", desc:"20m do início da trilha — QT-SGL/DBL/TPL/TV, café incluso, capela e salão de beleza", avg:180, rating:3.8, ratingSrc:"Tripadvisor · 58 avaliações", url:"https://www.tripadvisor.com/Hotel_Review-g3249618-d33796513-Reviews-Grande_Hotel_Aguas_da_Prata-Aguas_da_Prata_State_of_Sao_Paulo.html"},
+      {name:"Pousada do Casarão", desc:"90m do início da trilha (km 316,6) — APTO/SGL/DBL/TPL, café da manhã incluso, credenciada", avg:120, rating:3.7, ratingSrc:"Tripadvisor · 47 avaliações", url:"https://www.tripadvisor.com/Hotel_Review-g3249618-d8465472-Reviews-Hotel_Pousada_do_Casarao-Aguas_da_Prata_State_of_Sao_Paulo.html"},
+      {name:"Pousada do Orlando", desc:"180m do início da trilha (km 316,5) — SLG/DBL/TV/VT", avg:90, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
     ],
     restaurants: [
       {name:"Restaurante Aquarius", desc:"Buffet a quilo, +35 anos de tradição", avg:120, unit:"kg"},
@@ -424,9 +447,24 @@ const DATA = [
   {
     day: 1, dateOffset: 1, city: "Inconfidentes", sub: "Águas da Prata → Inconfidentes", km:"~70 km",
     hotels: [
-      {name:"Hotel Bororó", desc:"Centro, restaurante/bar próprio", avg:300},
-      {name:"Pousada Águas Livres", desc:"Bairro Romas, reserva fácil por WhatsApp", avg:300},
-      {name:"Pousada Bela Vista", desc:"Centro, fácil acesso de carro", avg:300},
+      {name:"Pousada Bela Vista", desc:"400m fora da trilha (km 236) — QT-DBL/TPL/Beliche, jantar e café da manhã inclusos", avg:140, rating:4.5, ratingSrc:"Booking (9,0-9,2/10) · 54-62 avaliações", url:"https://www.booking.com/hotel/br/pousada-bela-vista-inconfidentes.html"},
+      {name:"Pousada Santa Varanda", desc:"km 236, ao lado dos Correios — APTO/SGL QT TPL, café da manhã incluso", avg:130, rating:null, ratingSrc:"Comentários positivos no Google, sem nota agregada"},
+      {name:"Pousada Cristiano Couto", desc:"km 235,7 — QTO com TV/WC", avg:85, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Refúgio Graças & Prosas", desc:"km 235,5 — QT-TPL/VT/TV", avg:85, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Chácara do Bira", desc:"650m fora da trilha (km 235,3) — QT DBL/TPL/Beliche/WC CL/VT", avg:120, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Caminhos de Inconfidentes", desc:"80mt fora da trilha (km 235,4) — QT DBL/TPL/Beliche/WC CL/TV/VT/VS/FB", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Martinelli", desc:"Centro (km 235) — QT/APTO SGL-DBL, AC/VT/TV/FB", avg:100, rating:3.0, ratingSrc:"Tripadvisor · 5 avaliações", url:"https://www.tripadvisor.com/Hotel_Review-g5534212-d11700424-Reviews-Pousada_Martinelli-Inconfidentes_State_of_Minas_Gerais.html"},
+      {name:"Pousada Santa Luzia", desc:"km 235, Centro — DBL/TPL/Beliche/VT/VS", avg:65, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Santa Isabel", desc:"Saída da cidade, após a ponte (km 235) — QT/TPL/VT/TV/WC CL", avg:75, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Caminho da Fé", desc:"Rodovia MG 290, km 44 (Trevo de Inconfidentes) — APTO SGL/DBL, self-service, café incluso", avg:100, rating:null, ratingSrc:"Relatos de peregrinos muito positivos, sem nota agregada"},
+      {name:"Pousada Café em Flor", desc:"km 234,9, Rodovia Otacílio Bonamichi — QT DBL/AC", avg:140, rating:null, ratingSrc:"Listada no Tripadvisor, sem nota agregada"},
+      {name:"Chácara e Pousada RG", desc:"km 234,7, Sta Isabel — QT TPL/WC CL/VS", avg:110, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada do Maurão", desc:"km 234,1, Santa Isabel — QT SGL/DBL/TPL/TV/VS/AC, café incluso", avg:175, rating:null, ratingSrc:"Resumo qualitativo muito positivo (dezenas de comentários), sem nota numérica verificável"},
+      {name:"Pousada do Juninho", desc:"km 234, entrada dos bairros do Romas — QTO SGL/DBL/TPL/VT, jantar e café inclusos", avg:130, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Águas Livres", desc:"Bairro dos Romas, 6 km depois de Inconfidentes (km 230) — jantar e café da manhã inclusos", avg:170, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Morada do Sol", desc:"Bairro dos Romas, 7 km da cidade (km 229) — QT TPL/WC CL/APTO, jantar e café inclusos", avg:160, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Sítio Jacy e Destilaria Amburana", desc:"Bairro dos Romas (km 228) — QT-DBL/TPL/WC CL/TV/VS", avg:120, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Santa Rita", desc:"Bairro Córrego da Onça (km 225) — QT/SGL/DBL/TPL/WC CL/TV", avg:105, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
     ],
     restaurants: [
       {name:"Bar/Restaurante do Bororó", desc:"Pão de queijo, esfirra, lanches fartos", avg:120, unit:"pessoa"},
@@ -437,9 +475,19 @@ const DATA = [
   {
     day: 2, dateOffset: 2, city: "Estiva", sub: "Inconfidentes → Estiva", km:"~55 km",
     hotels: [
-      {name:"Pousada Poka", desc:"Centro de Estiva, credenciada no Caminho da Fé", avg:300},
-      {name:"Pousada Serra Azul", desc:"Vista panorâmica da Mantiqueira, restaurante próprio", avg:300},
-      {name:"Pouso/camping de apoio local", desc:"Opção mais simples e econômica", avg:300},
+      {name:"Pousada do Paulinho", desc:"Fazenda Velha (km 190,4) — QT TPL/WC CL", avg:95, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada e Restaurante Dona Maria", desc:"80mt fora da trilha, Fazenda Velha (km 190,3) — QT TPL/Beliche/WC CL/TV", avg:130, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Dona Vilma e Cantinho Jack Bruno", desc:"Bairro da Fazenda Velha (km 189,2) — QT/SGL/DBL/VT/TV", avg:145, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada São Francisco", desc:"Fazenda Velha (km 187,4) — TPL/WC CL/DBL/APTO TPL, jantar e café inclusos", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Santa Rita", desc:"Bairro Olaria (km 178,6) — QTO/DBL/TPL/Beliche, jantar e café inclusos", avg:140, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousadinha Sossego", desc:"350m fora da trilha (km 176,4) — QTO-TPL/VT/VS, APTO DBL/VT/AC", avg:110, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada e Hostel Mendes", desc:"100m fora da trilha (km 176) — QTO-SLG/DBL/TPL/VS", avg:80, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Poka", desc:"Entrada da cidade (km 176), Praça Francisco Ribeiro Pereira — credenciada, reservas via WhatsApp", avg:115, rating:4.0, ratingSrc:"Tripadvisor · 20 avaliações", url:"https://pousada-poka.webnode.page/"},
+      {name:"Pousada Canquerini", desc:"Centro (km 176) — TPL/TV/VS", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Serra Azul", desc:"Bairro Planalto (km 175) — APTO DBL-TPL/TV/VS/AC, credenciada", avg:140, rating:4.0, ratingSrc:"Tripadvisor · 11 avaliações", url:"https://www.pousadaserraazulestiva.com.br/"},
+      {name:"Pousada Totolândia", desc:"450m fora da trilha, Bairro Espraiado (km 174) — QTO/DBL/TPL/WC CL/TV/VT, jantar e café inclusos", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Vale Verde Hotel Fazenda", desc:"280m fora da trilha, Bairro Taperas (km 172,8) — APTO-SLG/DBL/TPL/TV/AC/FB", avg:155, rating:null, ratingSrc:"1 avaliação (5,4/10) — amostra insuficiente"},
+      {name:"Recanto Vó Mariinha", desc:"km 172, Estrada Estiva–Boa Vista/Taperas — TPL/Beliche", avg:140, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
     ],
     restaurants: [
       {name:"Restaurante da Pousada Serra Azul", desc:"Pratos caseiros regionais, vista da serra", avg:120, unit:"pessoa"},
@@ -450,9 +498,23 @@ const DATA = [
   {
     day: 3, dateOffset: 3, city: "Luminosa", sub: "Estiva → Luminosa (distrito de Brazópolis)", km:"~65 km",
     hotels: [
-      {name:"Casa Gonçalina", desc:"Suítes, restaurante, bicicletário e higienização de bike", avg:300},
-      {name:"Pousada Mirante da Luminosa", desc:"Vista panorâmica da Serra da Luminosa", avg:300},
-      {name:"Pousada da Lua", desc:"Clima familiar, estilo hostel, bem econômica", avg:300},
+      {name:"Candelária Hospedaria Rural / Cervejaria Sevda", desc:"km 112 — QT TPL/WC CL/VS/FB, APTO SGL/DBL/TPL", avg:130, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Casa Gonçalina", desc:"Rua José Albano, 306 (km 111) — QT/APTO DBL-TPL, restaurante próprio (refeições R$22-38)", avg:133, rating:4.0, ratingSrc:"Tripadvisor · 7 avaliações (inclui reclamação grave sobre grupo grande de peregrinos)", url:"https://www.casagoncalina.com.br/"},
+      {name:"Hospedagem Capela", desc:"km 111 — QT/SLG/DBL-TPL/WC CL", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Hospedaria Serra de Minas", desc:"km 111 — APTO SGL/QT TPL, jantar e café inclusos", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Casa da Família", desc:"km 111 — jantar e café inclusos", avg:145, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Sol Nascente", desc:"km 111 — QT DBL/WCCL", avg:90, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Nossa Senhora das Candeias", desc:"Centro de Luminosa (km 111) — QT SGL/DBL/TPL/Beliche/VS/WC CL", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Bella Vista", desc:"km 111, Centro — QT SGL/Beliche/VS/WC CL", avg:125, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Recanto de Luminosa", desc:"km 111 — QT DBL-TPL/TV/VS/WC CL, contato só via WhatsApp", avg:90, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada da Lua", desc:"Saída de Luminosa (km 110,5) — QT DBL/TPL/Beliche, café da manhã incluso", avg:103, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada da Seta (Novo Amanhecer)", desc:"Bairro Valentins (km 109,7) — QT/Beliche/WC CL", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Chalé Montanhês", desc:"km 108,8 — Flat/TPL/VS, jantar e café inclusos", avg:165, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada D. Inês", desc:"Bairro Valentinas (km 108) — QT TPL/WC CL/TV/VS", avg:120, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Recanto da Cachoeira", desc:"Estrada Bairro do Quilombo (km 105,4) — QT/DBL/TPL/Beliche/APTO DBL", avg:135, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Recanto Chalés São Francisco", desc:"1km fora da trilha, Bairro Quilombo (km 104,6) — QT-DBL/TPL/WC CL, translado gratuito", avg:165, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Mirante da Luminosa", desc:"Serra da Luminosa, Bairro do Quilombo (km 103) — jantar e café da manhã inclusos", avg:180, rating:null, ratingSrc:"Resumo qualitativo muito positivo, sem nota numérica verificável"},
+      {name:"Pousada Panorâmica", desc:"Serra da Luminosa, Bairro do Quilombo (km 102) — jantar e café inclusos", avg:170, rating:null, ratingSrc:"Resumo qualitativo muito positivo, sem nota numérica verificável"},
     ],
     restaurants: [
       {name:"Restaurante da Casa Gonçalina", desc:"Churrasqueira e fogão a lenha — almoço peregrino R$40 / turista R$60", avg:120, unit:"pessoa"},
@@ -463,9 +525,32 @@ const DATA = [
   {
     day: 4, dateOffset: 4, city: "Campos do Jordão", sub: "Luminosa → Campos do Jordão", km:"~65 km",
     hotels: [
-      {name:"Hotel Savoy", desc:"Chalés, piscina aquecida, playground, monitoria infantil", avg:300},
-      {name:"Hotel JB", desc:"Tradicional, no coração da Vila Capivari", avg:300},
-      {name:"Golden Park Campos", desc:"Mais tranquilo, aceita pet, entrada da cidade", avg:300},
+      {name:"Pousada Villa Hegus", desc:"230m fora da trilha, Alto da Boa Vista (km 79,7) — aberto 24h, café incluso", avg:365, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Refúgio dos Peregrinos", desc:"Vale Encantado — QT TPL/WC CL, café incluso", avg:170, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Recanto Monte Suíço", desc:"km 77,6 — APTO-DBL/FLAT, QT-SGL/DBL/TPL, com café da manhã", avg:230, rating:3.5, ratingSrc:"KAYAK (7,1/10) · 407 avaliações", url:"https://www.kayak.com.br/Hoteis-Pousada-Monte-Suico-Campos-do-Jordao.1070478719.ksp"},
+      {name:"Pousada Château dos Fontes", desc:"Jd. Andira (km 76) — APTO SLG/DBL/TPL/TV", avg:115, rating:null, ratingSrc:"Sem avaliação pública encontrada", url:"https://www.pousadachateaudosfontes.com.br/"},
+      {name:"Pousada Villa Garcia", desc:"km 76 — APTO DBL/TPL/TV", avg:185, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Colônia SAA", desc:"Imbiri (km 76) — QT-SGL/DBL/TPL/WC CL", avg:113, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Recanto Ninho Verde", desc:"Vila Ondina (km 75,5) — APTO SGL/DBL/TPL/TV/FB, café incluso", avg:200, rating:null, ratingSrc:"Sem avaliação pública encontrada", url:"https://www.recantoninhoverde.com.br/"},
+      {name:"Vila Paty", desc:"1600m fora da trilha (km 74,7) — APTO DBL/TPL/Beliche/TV/FB", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pé da Montanha", desc:"700m fora da trilha (km 74 P), Abernésia — QT-DBL/WC CL/TV", avg:190, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Casa Mãe Nossa Senhora da Alegria — Bodas de Cana", desc:"100m fora da trilha (km 74 P) — APTO-DBL/TPL", avg:160, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Nosso Cantinho", desc:"Rua Mário Crisol Donha, 83 (km 74 P) — QT SLG/DBL/TPL, WC CL", avg:130, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Sítio Boa Vista — Casa dos Pássaros", desc:"1100m fora da trilha, Alto da Boa Vista (km 73,7 P) — QT-DBL/TPL/WC/TV", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada das Flores", desc:"km 73 P — QT DBL/WC CL/TV/APTO DBL/TPL/Beliche/TV", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Hostel da Montanha", desc:"450m fora da trilha (km 73 P), Jardim Jaguaribe — DBL/TPL/TV, opções APTO ou dormitório", avg:185, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Monjas Beneditinas", desc:"Bairro Abernéssia (km 73,2 P) — SLG/DBL/TPL/Beliche", avg:175, rating:null, ratingSrc:"Mosteiro religioso — sem sistema de avaliação tradicional"},
+      {name:"Pousada Sino dos Ventos", desc:"300m fora da trilha (km 73,2 P), Vila Fracalanza — café da manhã incluso, APTO DBL/TPL/Beliche/TV", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Bike Ville", desc:"Vila Abernessia (km 73 P) — APTO/SGL/DBL/TPL", avg:180, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Casa Girassol", desc:"Vila Nova Suíça (km 73 P) — APTO SLG/DBL/TPL/TV, reserva para grupos", avg:409, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada FM", desc:"km 61,6 G, Bairro do Recanto Feliz — QT DBL/WC CL/TV/APTO DBL/TPL/Beliche/TV", avg:100, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Hotel Ascona", desc:"80m fora da trilha (km 61,4 G), Vila Everest — QT SLG/DBL/TPL/TV", avg:170, rating:null, ratingSrc:"Comentários muito positivos (café da manhã, localização), sem nota agregada", url:"https://www.hotelacona.com.br/"},
+      {name:"Pousada Primavera", desc:"km 60 G, Bairro do Capivari — APTO/SGL/DBL/TPL", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada", url:"https://www.pousadaprimaveracj.com.br/"},
+      {name:"Hotel Vill'Agi", desc:"km 59 G, Bairro do Recanto Feliz — APTO DBL/TPL/TV", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Recanto Feliz", desc:"km 58,8 G — APTO SLG/DBL/TPL/TV, café incluso", avg:150, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Jasmim da Serra", desc:"550m fora da trilha (km 58,2 G) — APTO SLG/DBL/TPL/TV/FB", avg:210, rating:null, ratingSrc:"Comentários muito positivos, sem nota agregada", url:"https://www.jasmimdaserra.com.br/"},
+      {name:"Chalés Fora de Estrada", desc:"1,9km fora da trilha (km 56,4 G) — QTO-SLG/DBL/TPL/WC CL/TV/FB, jantar e café inclusos", avg:275, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Pousada Campos Montreal", desc:"km 52,1 G — QTO-SLG/DBL/TPL/WC/TV/VT/VS, café incluso", avg:185, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
     ],
     restaurants: [
       {name:"O Boteco de Minas", desc:"Ótimo custo-benefício, medalhões e petiscos", avg:120, unit:"pessoa"},
@@ -476,9 +561,14 @@ const DATA = [
   {
     day: 5, dateOffset: 5, city: "Aparecida", sub: "Campos do Jordão → Aparecida (chegada)", km:"~63 km",
     hotels: [
-      {name:"Hotel Peregrinos", desc:"A 200m do Centro de Apoio ao Romeiro, dá pra ir a pé à Basílica", avg:300},
-      {name:"Britto Hotel", desc:"Em frente ao estacionamento do Santuário", avg:300},
-      {name:"São Bento Palace Hotel", desc:"Bom custo-benefício, ~5 min da entrada", avg:300},
+      {name:"Rainha do Brasil", desc:"1,4 km do Santuário, Jd. Paraíba — APTO-SGL/DBL/TV/AC/FB", avg:434, rating:null, ratingSrc:"Sem nota agregada encontrada (rede oficial do Santuário)"},
+      {name:"Rainha dos Apóstolos", desc:"1,4 km do Santuário, Jd. Paraíba — APTO-SGL/DBL/TV/AC/FB", avg:282, rating:null, ratingSrc:"Sem nota agregada encontrada (rede oficial do Santuário)"},
+      {name:"Hostel Utopía", desc:"1,2 km do Santuário, Rua Barão do Rio Branco — QT DBL-TPL/WC CL, opção mais econômica", avg:70, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Hotel Maria da Fé", desc:"850m do Santuário, Santa Rita — APTO SLG/DBL/TPL/TV/AC/FB (valores variam bastante, confirmar na reserva)", avg:268, rating:4.3, ratingSrc:"Tripadvisor · 104 avaliações · #1 de 122 hospedagens em Aparecida", url:"https://www.hotelmariadafe.com/"},
+      {name:"Pousada São Benedito", desc:"750m do Santuário, Bairro Santa Rita — APTO/SGL/DBL/TPL/TV/VT/FB/AC", avg:88, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Hotel Santo Graal", desc:"700m do Santuário, Bairro Santa Rita — APTO/SGL/DBL/TPL/AC/VT/FB", avg:175, rating:null, ratingSrc:"Avaliações mistas no Tripadvisor, sem nota agregada clara"},
+      {name:"Pousada Bela Rainha", desc:"450m do Santuário — APTO SGL/DBL/TPL/TV/VT/AC/FB (atenção: lance de escadas)", avg:120, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
+      {name:"Libertador Hotel", desc:"280m do Santuário — APTO SGL/DBL/TPL/TV/VT", avg:145, rating:null, ratingSrc:"Sem avaliação pública encontrada"},
     ],
     restaurants: [
       {name:"Augusto Restaurante", desc:"Buffet livre no Centro de Apoio ao Romeiro", avg:120, unit:"pessoa"},
@@ -515,8 +605,10 @@ function render(){
     stopEl.className = 'stop' + (idx === 0 ? ' open' : '');
     stopEl.dataset.index = idx;
 
-    const hotelOptions = stop.hotels.map((h,i) => optionRow('hotel', idx, i, h)).join('');
-    const restOptions = stop.restaurants.map((r,i) => optionRow('rest', idx, i, r)).join('');
+    const hotelSorted = stop.hotels.slice().sort((a,b) => (b.rating||0) - (a.rating||0));
+    const restSorted = stop.restaurants.slice().sort((a,b) => (b.rating||0) - (a.rating||0));
+    const hotelOptions = hotelSorted.map((h,i) => optionRow('hotel', idx, i, h)).join('');
+    const restOptions = restSorted.map((r,i) => optionRow('rest', idx, i, r)).join('');
 
     stopEl.innerHTML = `
       <div class="stop-marker">${stop.day}</div>
@@ -563,14 +655,30 @@ function render(){
   recalc();
 }
 
+function starsHtml(rating, src){
+  if(rating === undefined) return ''; // restaurants: no rating system applied
+  if(rating === null || rating === 0){
+    return `<div class="opt-stars opt-stars-none">☆☆☆☆☆ <span class="opt-stars-src">sem avaliação pública</span></div>`;
+  }
+  const full = Math.floor(rating);
+  const half = (rating - full) >= 0.5 ? 1 : 0;
+  const empty = 5 - full - half;
+  const starChars = '★'.repeat(full) + (half ? '⯨' : '') + '☆'.repeat(empty);
+  return `<div class="opt-stars" title="${src||''}">${starChars} <span class="opt-stars-num">${rating.toFixed(1).replace('.',',')}</span><span class="opt-stars-src"> · ${src||''}</span></div>`;
+}
+
 function optionRow(type, stopIdx, i, item){
   const unit = item.unit ? `/${item.unit}` : '/diária';
+  const nameHtml = item.url
+    ? `<a href="${item.url}" target="_blank" rel="noopener" class="opt-link" onclick="event.stopPropagation()">${item.name} <span class="opt-link-icon">↗</span></a>`
+    : item.name;
   return `
     <div class="option">
       <input type="radio" name="${type}-${stopIdx}" data-i="${i}" data-avg="${item.avg}" id="${type}-${stopIdx}-${i}">
       <label class="opt-info" for="${type}-${stopIdx}-${i}">
-        <b>${item.name}</b>
+        <b>${nameHtml}</b>
         <span>${item.desc}</span>
+        ${starsHtml(item.rating, item.ratingSrc)}
       </label>
       <div class="opt-avg">média<br>${currency(item.avg)}${unit}</div>
       <div class="opt-input">
